@@ -1,0 +1,193 @@
+<div class="wrapper">
+    <app-topnavbar></app-topnavbar>
+    <app-asidenavbar></app-asidenavbar>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <section class="content">
+           <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Ajouter
+  </button>
+
+  <!-- Modal -->
+  <div  [hidden]="ismodal"  class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Ajouter un utilisateur</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" data-backdrop="false">
+          <form #userForm="ngForm" class="needs-validation" novalidate>
+            <div class="form-group">
+              <label for="firstName" for="validationCustom01">Prénom<font color="red">*</font></label>
+              <input type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName" #firstName="ngModel" [ngClass]="{'is-invalid':userForm.submitted && firstName.invalid}" name="firstName" placeholder="Prénom" required>
+            </div>
+            <div class="form-group">
+                <label for="firstName">Nom<font color="red">*</font></label>
+                <input type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" #lastName="ngModel" [ngClass]="{'is-invalid':userForm.submitted && lastName.invalid}" name="lastName" placeholder="Nom" required>
+            </div>
+              <div class="form-group">
+                  <label for="email">Email<font color="red">*</font></label>
+                  <input type="text" class="form-control" id="email" [(ngModel)]="user.email" #email="ngModel" [ngClass]="{'is-invalid':userForm.submitted && lastName.invalid}" name="email" placeholder="Exemple@biat.com.tn" required email>
+              </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe<font color="red">*</font></label>
+                    <input type="password" class="form-control" id="password" [(ngModel)]="user.password" #password="ngModel" [ngClass]="{'is-invalid':userForm.submitted && password.invalid}" name="password" placeholder="Mot de passe" required minlength="6">
+                 </div>
+                  <div class="form-group">
+                      <label for="phoneNUmber">Téléphone<font color="red">*</font></label>
+                      <input type="text" class="form-control" id="phoneNUmber" [(ngModel)]="user.phoneNumber" #phoneNumber="ngModel" [ngClass]="{'is-invalid':userForm.submitted && phoneNumber.invalid}" name="phoneNumber" placeholder="Numéro de téléphone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role<font color="red">*</font></label>
+                        <select class="form-control" id="role" [(ngModel)]="user.role" #role="ngModel" [ngClass]="{'is-invalid':userForm.submitted && role.invalid}" name="role" required>
+                          <option value="" disabled selected >Select Role</option>
+                          <option value="ADMIN">ADMIN</option>
+                          <option value="USER">USER</option>
+                        </select>
+                    </div>
+
+
+          </form>
+
+        </div>
+        <div class="modal-footer" data-backdrop="false">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="button" class="btn btn-primary" (click)="saveUser(user,userForm)" (click)=" showRegistrationSuccess()"  data-dismiss="modal">Sauvegarder</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+          <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+          <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+          <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+          <!------ Include the above in your HEAD tag ---------->
+
+          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+          <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+          <div class="container">
+            <div class="row">
+
+
+                  <div class="col-md-12">
+                  <h4>Gérer les utilisateurs</h4>
+                  <div class="table-responsive">
+
+
+                        <table id="mytable" class="table table-bordred table-striped" style="width: 83%">
+
+                          <thead>
+                            <tr>
+                              <th>Prénom</th>
+                              <th>Nom</th>
+                              <th>Email</th>
+                              <th>Téléphone</th>
+                              <th>Role</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let user of users">
+                              <td>{{user.firstName}}</td>
+                              <td>{{user.lastName}}</td>
+                              <td>{{user.email}}</td>
+                              <td>{{user.phoneNumber}}</td>
+                              <td>{{user.role}}</td>
+                              <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button (click)="getUserToUpdate(user)" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                              <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button (click)="getEmailToDelete(user.email)" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+
+                            </tr>
+                          </tbody>
+
+
+          </table>
+
+
+                      </div>
+
+                  </div>
+            </div>
+          </div>
+
+
+
+      </section>
+    </section>
+ </div>
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true"  data-backdrop="false">
+                <div class="modal-dialog">
+              <div class="modal-content">
+                    <div class="modal-header"  data-backdrop="false">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                  <h4 class="modal-title custom_align" id="Heading">Modifier un utilisateur</h4>
+                </div>
+                    <div class="modal-body"  data-backdrop="false">
+                    <div class="form-group">
+                        <label for="firstName">Prénom</label>
+                  <input class="form-control " type="text"   [(ngModel)]="userToUpdate.firstName" value={{userToUpdate.firstName}}>
+                  </div>
+                  <div class="form-group">
+                      <label for="lastName">Nom</label>
+                  <input class="form-control " type="text"  [(ngModel)]="userToUpdate.lastName" value={{userToUpdate.lastName}}>
+                  </div>
+                  <div class="form-group">
+                      <label for="Email">Email</label>
+                    <input class="form-control " type="text"  [(ngModel)]="userToUpdate.email" value={{userToUpdate.email}} disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Téléphone</label>
+                      <input class="form-control " type="text"  [(ngModel)]="userToUpdate.phoneNumber" value={{userToUpdate.phoneNumber}}>
+                      </div>
+                      <div class="form-group">
+                        <label for="role">Role</label>
+                        <select class="form-control" id="role" [(ngModel)]="userToUpdate.role" value={{userToUpdate.role}} name="role" >
+                          <option value="" disabled selected >Select Role</option>
+                          <option value="ADMIN">ADMIN</option>
+                          <option value="USER">USER</option>
+                        </select>
+                      </div>
+                </div>
+                    <div class="modal-footer "  data-backdrop="false">
+                  <button (click)="updateUser(userToUpdate)" (click)="showUpdateSuccess()" type="button" class="btn btn-warning " data-dismiss="modal" ><span class="glyphicon glyphicon-ok-sign"></span> Modifier</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Annuler</button>
+                </div>
+                  </div>
+              <!-- /.modal-content -->
+            </div>
+                <!-- /.modal-dialog -->
+              </div>
+
+
+
+              <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true"  data-backdrop="false">
+                <div class="modal-dialog"  data-backdrop="false">
+              <div class="modal-content">
+                    <div class="modal-header"  data-backdrop="false">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                  <h4 class="modal-title custom_align" id="Heading">Supprimer un utilisateur </h4>
+                </div>
+                    <div class="modal-body"  data-backdrop="false">
+
+                 <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Êtes-vous sûr de vouloir supprimer cet utilisateur ?</div>
+
+                </div>
+                  <div class="modal-footer "  data-backdrop="false">
+                  <button (click)="deleteUser()" (click)="showDeleteSucess()" type="button" class="btn btn-success" data-dismiss="modal" ><span class="glyphicon glyphicon-ok-sign"></span>Supprimer</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Annuler</button>
+                </div>
+                  </div>
+              <!-- /.modal-content -->
+            </div>
+                <!-- /.modal-dialog -->
+              </div>
+
+
+      <app-footernavbar></app-footernavbar>
+      <app-settingsnavbar></app-settingsnavbar>
+    </div>
